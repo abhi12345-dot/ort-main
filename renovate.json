@@ -1,0 +1,47 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:recommended",
+    "docker:disable",
+    "helpers:pinGitHubActionDigests",
+    ":semanticCommitScopeDisabled",
+    ":semanticCommitTypeAll(deps)"
+  ],
+  "dependencyDashboard": false,
+  "ignoreDeps": [
+    "org.eclipse.sw360:client"
+  ],
+  "ignorePaths": [
+    "plugins/reporters/web-app-template",
+    "**/src/funTest/assets/**",
+    "**/src/test/assets/**"
+  ],
+  "labels": ["dependencies"],
+  "packageRules": [
+    {
+      "matchManagers": ["gradle"],
+      "commitMessageTopic": "{{depName}}"
+    },
+    {
+      "matchPackageNames": [
+        "com.atlassian.jira:jira-rest-java-client-api",
+        "com.atlassian.jira:jira-rest-java-client-app"
+      ],
+      "allowedVersions": "/^[0-9]+\\.[0-9]+\\.[0-9]+$/"
+    },
+    {
+      "matchPackageNames": [
+        "software.amazon.awssdk:*"
+      ],
+      "matchUpdateTypes": ["patch"],
+      "schedule": "after 9pm on wednesday"
+    },
+    {
+      "matchManagers": ["npm"],
+      "schedule": "after 9pm on wednesday"
+    }
+  ],
+  "nuget": {
+    "enabled": false
+  }
+}
